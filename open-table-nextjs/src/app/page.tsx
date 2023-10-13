@@ -1,17 +1,23 @@
-import styles from "./page.module.css";
+"use client";
+
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Inter } from "next/font/google";
+import { useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const router = useRouter();
+  const [location, setLocation] = useState("");
   return (
     <main className="bg-gray-100 min-h-screen w-screen">
       <main className="max-w-screen-2xl m-auto bg-white">
         {/* navbar */}
         <nav className="bg-white p-2 flex justify-between">
-          <a href="" className="font-bold text-gray-700 text-2xl">
+          <Link href="/" className="font-bold text-gray-700 text-2xl">
             OpenTable
-          </a>
+          </Link>
           <div>
             <div className="flex gap-3">
               <button className="bg-blue-900 border p-1 px-4 rounded text-white">
@@ -37,8 +43,15 @@ export default function Home() {
                   type="text"
                   className="rounded mr-3 p-2 w-[450px] bg-white"
                   placeholder="State, city or town"
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
                 />
-                <button className="bg-red-600 px-9 py-2 text-white">
+                <button
+                  className="bg-red-600 px-9 py-2 text-white"
+                  onClick={() => {
+                    location === "banana" ? null : router.push("search");
+                  }}
+                >
                   Let's go
                 </button>
               </div>
@@ -51,24 +64,30 @@ export default function Home() {
             <div className="py-3 px-36 mt-10 flex flex-wrap">
               {/* card */}
               <div className="w-64 h-72 m-3 rounded overflow-hidden border cursor-pointer">
-                <img
-                  src="https://resizer.otstatic.com/v2/photos/wide-huge/2/31852905.jpg"
-                  alt=""
-                  className="w-full h36"
-                />
-                <div className="p-1">
-                  <h3 className="font-bold text-2xl mb-2">Milestones Grill</h3>
-                  <div className="flex items-start">
-                    <div className="flex mb-2">*****</div>
-                    <p className="ml-2"> 77 rewies</p>
+                <Link href="/restaurant/milestones-grill">
+                  <img
+                    src="https://resizer.otstatic.com/v2/photos/wide-huge/2/31852905.jpg"
+                    alt=""
+                    className="w-full h36"
+                  />
+                  <div className="p-1">
+                    <h3 className="font-bold text-2xl mb-2">
+                      Milestones Grill
+                    </h3>
+                    <div className="flex items-start">
+                      <div className="flex mb-2">*****</div>
+                      <p className="ml-2"> 77 rewies</p>
+                    </div>
+                    <div className="flex text-reg font-light capitalize">
+                      <p className="mr-3">Mexican</p>
+                      <p className="mr-3">$$$$</p>
+                      <p>Toronto</p>
+                    </div>
+                    <p className="text-sm mt-1 font-bold">
+                      Booked 3 times today
+                    </p>
                   </div>
-                  <div className="flex text-reg font-light capitalize">
-                    <p className="mr-3">Mexican</p>
-                    <p className="mr-3">$$$$</p>
-                    <p>Toronto</p>
-                  </div>
-                  <p className="text-sm mt-1 font-bold">Booked 3 times today</p>
-                </div>
+                </Link>
               </div>
               {/* card */}
             </div>
