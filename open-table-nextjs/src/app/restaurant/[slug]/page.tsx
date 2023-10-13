@@ -1,27 +1,12 @@
 import React from "react";
 import Link from "next/link";
+import NavBar from "@/app/components/NavBar";
 
 const RestaurantDetailsPage = () => {
   return (
     <main className="bg-gray-100 min-h-screen w-screen">
       <main className="max-w-screen-2xl m-auto bg-white">
-        {/* navbar */}
-        <nav className="bg-white p-2 flex justify-between">
-          <Link href="/" className="font-bold text-gray-700 text-2xl">
-            OpenTable
-          </Link>
-          <div>
-            <div className="flex gap-3">
-              <button className="bg-blue-900 border p-1 px-4 rounded text-white">
-                Sign In
-              </button>
-              <button className="text-black border p-1 px-4 rounded">
-                Sign Up
-              </button>
-            </div>
-          </div>
-        </nav>
-        {/* navbar */}
+        <NavBar />
         {/* header */}
         <div className="h-96 overflow-hidden">
           <div className="bg-center bg-gradient-to-r from-[#0f1f47] to-[#5f6984] h-full flex justify-center items-center">
