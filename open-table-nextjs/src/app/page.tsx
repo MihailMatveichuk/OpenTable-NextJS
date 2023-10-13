@@ -24,42 +24,57 @@ export default function Home() {
           </div>
         </nav>
         {/* navbar */}
-        {/* header */}
-        <div className="h-96 overflow-hidden">
-          <div className="bg-center bg-gradient-to-r from-[#0f1f47] to-[#5f6984] h-full flex justify-center items-center">
-            <h1 className="text-7xl text-white capitalized text-shadow text-center">
-              Milestones Grill (Toronto)
-            </h1>
-          </div>
-        </div>
-        {/* header */}
-        {/* description portion */}
-        <div className="flex m-auto w-2/3 justify-between items-start 0 -mt-11">
-          <div className="bg-white w-[100%] rounded p-3 shadow">
-            {/* restaurants navbar */}
-            <nav className="flex text-reg border-b pb-2">
-              <a href="" className="mr-7">
-                Overview
-              </a>
-              <a href="" className="mr-7">
-                Menu
-              </a>
-            </nav>
-            {/* restaurants navbar */}
-            {/* menu */}
-            <div className="bg-white mt-5">
-              <div>
-                <div className="mt-4 pb-1 mb-1">
-                  <h1 className="font-bold text-4xl">Menu</h1>
-                </div>
-                <div className="flex flex-wrap justify-between"></div>
+        <main>
+          {/* header */}
+          <div className="h-64 bg-gradient-to-r from-[#0f1f47] to-[#5f6984] p-2">
+            <div className="text-center mt-10">
+              <h1 className="text-5xl font-bold mb-2 text-white">
+                Find your table for any ocassions
+              </h1>
+              {/* searchbar */}
+              <div className="text-left text-lg py-3 m-auto flex justify-center">
+                <input
+                  type="text"
+                  className="rounded mr-3 p-2 w-[450px] bg-white"
+                  placeholder="State, city or town"
+                />
+                <button className="bg-red-600 px-9 py-2 text-white">
+                  Let's go
+                </button>
               </div>
+              {/* searchbar */}
             </div>
-            {/* menu */}
           </div>
-        </div>
-        {/* reservation card portion */}
-        {/* description portion */}
+          {/* header */}
+          {/* cardsarea */}
+          <main>
+            <div className="py-3 px-36 mt-10 flex flex-wrap">
+              {/* card */}
+              <div className="w-64 h-72 m-3 rounded overflow-hidden border cursor-pointer">
+                <img
+                  src="https://resizer.otstatic.com/v2/photos/wide-huge/2/31852905.jpg"
+                  alt=""
+                  className="w-full h36"
+                />
+                <div className="p-1">
+                  <h3 className="font-bold text-2xl mb-2">Milestones Grill</h3>
+                  <div className="flex items-start">
+                    <div className="flex mb-2">*****</div>
+                    <p className="ml-2"> 77 rewies</p>
+                  </div>
+                  <div className="flex text-reg font-light capitalize">
+                    <p className="mr-3">Mexican</p>
+                    <p className="mr-3">$$$$</p>
+                    <p>Toronto</p>
+                  </div>
+                  <p className="text-sm mt-1 font-bold">Booked 3 times today</p>
+                </div>
+              </div>
+              {/* card */}
+            </div>
+          </main>
+          {/* cardsarea */}
+        </main>
       </main>
     </main>
   );
