@@ -17,7 +17,7 @@ model Restaurant {
   images      String[]
   description String
   open_time   String
-  dclose_time String
+  close_time  String
   slug        String   @unique
   items       Item[]
   location_id Int
@@ -38,7 +38,6 @@ model Item {
   restaurant    Restaurant @relation(fields: [restaurant_id], references: [id])
   created_at    DateTime   @default(now())
   updated_at    DateTime   @updatedAt
-  restaurantId  Int
 }
 
 model Location {
