@@ -1,9 +1,9 @@
 import React from "react";
 
-const Item = () => {
+const Item = ({ name }: { name: string }) => {
   return (
-    <div className='mt-4 border-b pb-6'>
-      <h1 className='font-bold text-6xl'>Milestones Grill</h1>
+    <div className="mt-4 border-b pb-6">
+      <h1 className="font-bold text-6xl">{name}</h1>
     </div>
   );
 };
