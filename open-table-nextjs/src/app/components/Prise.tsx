@@ -7,14 +7,14 @@ export default function Prise({ price }: { price: PRICE }) {
       return (
         <>
           <span>$$</span>
-          <span className="text-gray-400">$$</span>
+          <span className='text-gray-400'>$$</span>
         </>
       );
     } else if (price === PRICE.REGULAR) {
       return (
         <>
           <span>$$$</span>
-          <span className="text-gray-400">$</span>
+          <span className='text-gray-400'>$</span>
         </>
       );
     } else {
@@ -25,5 +25,5 @@ export default function Prise({ price }: { price: PRICE }) {
       );
     }
   };
-  return <p className="flex mr-3">{renerPrice()}</p>;
+  return <p className='flex'>{renerPrice()}</p>;
 }
