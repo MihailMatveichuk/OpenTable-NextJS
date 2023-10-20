@@ -1,48 +1,74 @@
 import Prise from "@/app/components/Prise";
-import { IRestaurant } from "@/app/page";
 import { Cuisine, Location, PRICE } from "@prisma/client";
+import Link from "next/link";
 import React from "react";
 
 const SearchSideBar = ({
   location,
   cuisine,
-  restaurant,
+  searchParams,
 }: {
   location: Location[];
   cuisine: Cuisine[];
-  restaurant: IRestaurant[];
+  searchParams: { city?: string; cuisine?: string };
 }) => {
-  const filteredPrices = restaurant.map((item) => item.price);
-  const prices = Array.from(new Set(filteredPrices));
+  const prices = [PRICE.CHEAP, PRICE.REGULAR, PRICE.EXPENSIVE];
 
   return (
     <div className='w-1/5'>
-      <div className='border-b pb-4'>
+      <div className='border-b pb-4 flex flex-col'>
         <h1 className='mb-2'>Region</h1>
         {location.map((region) => (
-          <p className='font-light text-reg capitalize' key={region.id}>
+          <Link
+            href={{
+              pathname: "/search",
+              query: {
+                ...searchParams,
+                city: region.name,
+              },
+            }}
+            className='font-light text-reg capitalize'
+            key={region.id}
+          >
             {region.name}
-          </p>
+          </Link>
         ))}
       </div>
-      <div className='border-b pb-4 mt-3'>
+      <div className='border-b pb-4 mt-3 flex flex-col'>
         <h1 className='mb-2'>Cuisine</h1>
         {cuisine.map((item) => (
-          <p className='font-light text-reg capitalize' key={item.id}>
+          <Link
+            href={{
+              pathname: "/search",
+              query: {
+                ...searchParams,
+                cuisine: item.name,
+              },
+            }}
+            className='font-light text-reg capitalize'
+            key={item.id}
+          >
             {item.name}
-          </p>
+          </Link>
         ))}
       </div>
       <div className='mt-3 pb-4'>
         <h1 className='mb-2'>Price</h1>
         <div className='flex flex gap-2'>
           {prices.map((price) => (
-            <button
-              className='border w-fit text-reg font-light rounded p-1'
+            <Link
+              href={{
+                pathname: "/search",
+                query: {
+                  ...searchParams,
+                  price: price,
+                },
+              }}
+              className='border w-fit text-reg font-light rounded p-1 text-center'
               key={price}
             >
               <Prise price={price} />
-            </button>
+            </Link>
           ))}
         </div>
       </div>

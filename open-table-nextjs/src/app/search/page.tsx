@@ -3,12 +3,45 @@ import Header from "../components/Header";
 import SearchSideBar from "./components/SearchSideBar";
 import RestaurantCard from "./components/RestaurantCard";
 import Head from "./head";
-import { PrismaClient } from "@prisma/client";
+import { PRICE, PrismaClient } from "@prisma/client";
 import { IRestaurant } from "../page";
 
 const prisma = new PrismaClient();
 
-const fetchRestaurantData = (city: string | undefined) => {
+interface ISearchParams {
+  city?: string;
+  cuisine?: string;
+  price?: PRICE;
+}
+
+const fetchRestaurantData = (searchParams: ISearchParams) => {
+  const where: any = {};
+
+  if (searchParams.city) {
+    const location = {
+      name: {
+        equals: searchParams.city.toLowerCase(),
+      },
+    };
+    where.location = location;
+  }
+
+  if (searchParams.cuisine) {
+    const cuisine = {
+      name: {
+        equals: searchParams.cuisine.toLowerCase(),
+      },
+    };
+    where.cuisine = cuisine;
+  }
+
+  if (searchParams.price) {
+    const price = {
+      equals: searchParams.price,
+    };
+    where.price = price;
+  }
+
   const select = {
     id: true,
     name: true,
@@ -19,15 +52,8 @@ const fetchRestaurantData = (city: string | undefined) => {
     slug: true,
   };
 
-  if (!city) prisma.restaurant.findMany({ select });
   const data = prisma.restaurant.findMany({
-    where: {
-      location: {
-        name: {
-          equals: city?.toLowerCase(),
-        },
-      },
-    },
+    where,
     select,
   });
   if (!data) {
@@ -45,8 +71,8 @@ const fetchCuisines = async () => {
   return prisma.cuisine.findMany();
 };
 
-const Search = async ({ searchParams }: { searchParams: { city: string } }) => {
-  const restaurantData = await fetchRestaurantData(searchParams.city);
+const Search = async ({ searchParams }: { searchParams: ISearchParams }) => {
+  const restaurantData = await fetchRestaurantData(searchParams);
   const location = await fetchLocation();
   const cuisine = await fetchCuisines();
 
@@ -58,7 +84,7 @@ const Search = async ({ searchParams }: { searchParams: { city: string } }) => {
         <SearchSideBar
           location={location}
           cuisine={cuisine}
-          restaurant={restaurantData}
+          searchParams={searchParams}
         />
         <div className='w-5/6'>
           {restaurantData.length ? (
