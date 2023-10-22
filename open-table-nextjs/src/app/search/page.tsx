@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import SearchSideBar from "./components/SearchSideBar";
 import RestaurantCard from "./components/RestaurantCard";
 import Head from "./head";
-import { PRICE, PrismaClient } from "@prisma/client";
+import { PRICE, PrismaClient, Review } from "@prisma/client";
 import { IRestaurant } from "../page";
 
 const prisma = new PrismaClient();
@@ -12,6 +12,7 @@ interface ISearchParams {
   city?: string;
   cuisine?: string;
   price?: PRICE;
+  reviews?: Review[];
 }
 
 const fetchRestaurantData = (searchParams: ISearchParams) => {
@@ -50,6 +51,7 @@ const fetchRestaurantData = (searchParams: ISearchParams) => {
     cuisine: true,
     location: true,
     slug: true,
+    reviews: true,
   };
 
   const data = prisma.restaurant.findMany({

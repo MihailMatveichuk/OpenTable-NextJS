@@ -20,10 +20,13 @@ const Card = ({ restaurant }: IProps) => {
           <h3 className='font-bold text-2xl mb-2'>{restaurant.name}</h3>
           <div className='flex items-start'>
             <div className='flex mb-2'>*****</div>
-            <p className='ml-2'> 77 rewies</p>
+            <p className='ml-2'>
+              {`${restaurant.reviews.length}`} review
+              {restaurant.reviews.length !== 1 ? "s" : ""}
+            </p>
           </div>
-          <div className='flex text-reg font-light capitalize'>
-            <p className='mr-3'>{restaurant.cuisine.name}</p>
+          <div className='flex text-reg font-light gap-3 capitalize'>
+            <p>{restaurant.cuisine.name}</p>
             <Prise price={restaurant.price} />
             <p>{restaurant.location.name}</p>
           </div>
