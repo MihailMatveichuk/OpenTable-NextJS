@@ -13,10 +13,10 @@ const Description = () => {
       <div className='bg-white w-[70%] rounded p-3 shadow'>
         <RestaurantNav slug={""} />
         <Item name={""} />
-        <Ratings />
+        <Ratings reviews={[]} />
         <DescriptionItem desc={""} />
         <Images images={[]} />
-        <Review />
+        <Review reviews={[]} />
       </div>
       <ReservationCard />
     </div>
