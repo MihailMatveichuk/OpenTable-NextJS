@@ -3,6 +3,7 @@ import React from "react";
 import { Cuisine, Location, PRICE, Review } from "@prisma/client";
 import Prise from "@/app/components/Prise";
 import { calculatReviewRating } from "../../../../utils/calculatReviewRating";
+import Stars from "@/app/components/Stars";
 
 export interface ISelectedData {
   id: number;
@@ -30,7 +31,7 @@ const RestaurantCard = ({ data }: { data: ISelectedData }) => {
       <div className='pl-5'>
         <h2 className='text-3xl'>{data.name}</h2>
         <div className='flex items-start'>
-          <div className='flex mb-2'>*****</div>
+          <Stars reviews={data.reviews} />
           <p className='ml-2 text-sm'>{renderRatingText()}</p>
         </div>
         <div className='mb-9'>
