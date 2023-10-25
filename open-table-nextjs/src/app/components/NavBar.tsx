@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import React from "react";
+import LoginModal from "./LoginModal";
 
 const NavBar = () => {
   return (
@@ -11,12 +12,8 @@ const NavBar = () => {
       </Link>
       <div>
         <div className='flex gap-3'>
-          <button className='bg-blue-900 border p-1 px-4 rounded text-white'>
-            Sign In
-          </button>
-          <button className='text-black border p-1 px-4 rounded'>
-            Sign Up
-          </button>
+          <LoginModal isSignin={true} />
+          <LoginModal isSignin={false} />
         </div>
       </div>
     </nav>
