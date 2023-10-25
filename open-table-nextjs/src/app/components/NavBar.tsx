@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import React from "react";
-import LoginModal from "./LoginModal";
+import AuthModal from "./AuthModal";
 
 const NavBar = () => {
   return (
@@ -12,8 +12,8 @@ const NavBar = () => {
       </Link>
       <div>
         <div className='flex gap-3'>
-          <LoginModal isSignin={true} />
-          <LoginModal isSignin={false} />
+          <AuthModal isSignin={true} />
+          <AuthModal isSignin={false} />
         </div>
       </div>
     </nav>
