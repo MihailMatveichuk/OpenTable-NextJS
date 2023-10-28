@@ -11,33 +11,17 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    const { id, firstName, lastName, email, phone, city, password } = req.body;
+    const { email, password } = req.body;
     const errors: string[] = [];
 
     const validationSchema = [
-      {
-        valid: validator.isLength(firstName, { min: 1, max: 20 }),
-        errrMessage: "First name is invalued",
-      },
-      {
-        valid: validator.isLength(lastName, { min: 1, max: 20 }),
-        errrMessage: "Last name is invalued",
-      },
       {
         valid: validator.isEmail(email),
         errrMessage: "Email is invalued",
       },
       {
-        valid: validator.isMobilePhone(phone),
-        errrMessage: "Phone is invalued",
-      },
-      {
-        valid: validator.isLength(city, { min: 1, max: 20 }),
-        errrMessage: "City is invalued",
-      },
-      {
-        valid: validator.isStrongPassword(password),
-        errrMessage: "Password is not strong enough",
+        valid: validator.isLength(password, { min: 1 }),
+        errrMessage: "Password is invalued",
       },
     ];
 
@@ -57,38 +41,34 @@ export default async function handler(
       },
     });
 
-    if (userWithEmail) {
+    if (!userWithEmail) {
       return res
-        .status(400)
-        .json({ errortMessage: "This email is associated with another user" });
+        .status(401)
+        .json({ errortMessage: "Email or password is not correct" });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const isMatch = await bcrypt.compare(password, userWithEmail.password);
 
-    const user = await prisma.user.create({
-      data: {
-        first_name: firstName,
-        last_name: lastName,
-        password: hashedPassword,
-        email,
-        city,
-        phone,
-      },
-    });
+    if (!isMatch) {
+      return res
+        .status(401)
+        .json({ errortMessage: "Email or password is not correct" });
+    }
 
     const ALG = "HS256";
     const SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
 
     const token = await new jose.SignJWT({
-      email: user.email,
+      email: userWithEmail.email,
     })
       .setProtectedHeader({ alg: ALG })
       .setExpirationTime("24h")
       .sign(SECRET);
 
     res.status(200).json({
-      hello: token,
+      authorized: isMatch,
     });
   }
+
   return res.status(404).json("Unknown endpoint");
 }
