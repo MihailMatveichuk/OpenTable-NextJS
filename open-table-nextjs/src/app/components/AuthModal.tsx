@@ -6,7 +6,7 @@ import { useEffect, useState, useContext } from "react";
 import AuthModalInputs from "./AuthModalInputs";
 import useAuth from "../../../hooks/useAuth";
 import { AuthenticationContext } from "@/context/AuthContext";
-import { CircularProgress } from "@mui/material";
+import { Alert, CircularProgress } from "@mui/material";
 
 const style = {
   position: "absolute" as "absolute",
@@ -106,6 +106,17 @@ export default function AuthModal({ isSignin }: { isSignin: boolean }) {
             </div>
           ) : (
             <div className='p-2 h-[500px]'>
+              {error ? (
+                <div className='mb-8'>
+                  <Alert severity='error'>{error}</Alert>
+                </div>
+              ) : data ? (
+                <div className='mb-8'>
+                  <Alert severity='success'>
+                    You was successfully signed in!!!
+                  </Alert>
+                </div>
+              ) : null}
               <div className='uppercase font-bold text-center pb-2 border-b mb-2'>
                 <p className='text-sm'>
                   {renderContent("Sign In", "Create A New Account")}

@@ -17,23 +17,23 @@ export default async function handler(
     const validationSchema = [
       {
         valid: validator.isLength(firstName, { min: 1, max: 20 }),
-        errrMessage: "First name is invalued",
+        errrMessage: "First name is invalid",
       },
       {
         valid: validator.isLength(lastName, { min: 1, max: 20 }),
-        errrMessage: "Last name is invalued",
+        errrMessage: "Last name is invalid",
       },
       {
         valid: validator.isEmail(email),
-        errrMessage: "Email is invalued",
+        errrMessage: "Email is invalid",
       },
       {
         valid: validator.isMobilePhone(phone),
-        errrMessage: "Phone is invalued",
+        errrMessage: "Phone is invalid",
       },
       {
         valid: validator.isLength(city, { min: 1, max: 20 }),
-        errrMessage: "City is invalued",
+        errrMessage: "City is invalid",
       },
       {
         valid: validator.isStrongPassword(password),
@@ -48,7 +48,7 @@ export default async function handler(
     });
 
     if (errors.length) {
-      return res.status(400).json({ errortMessage: errors });
+      return res.status(400).json({ errorMessage: errors });
     }
 
     const userWithEmail = await prisma.user.findUnique({
@@ -60,7 +60,7 @@ export default async function handler(
     if (userWithEmail) {
       return res
         .status(400)
-        .json({ errortMessage: "This email is associated with another user" });
+        .json({ errorMessage: "This email is associated with another user" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);

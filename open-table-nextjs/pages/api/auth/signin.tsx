@@ -17,11 +17,11 @@ export default async function handler(
     const validationSchema = [
       {
         valid: validator.isEmail(email),
-        errrMessage: "Email is invalued",
+        errrMessage: "Email is invalid",
       },
       {
         valid: validator.isLength(password, { min: 1 }),
-        errrMessage: "Password is invalued",
+        errrMessage: "Password is invalid",
       },
     ];
 
@@ -32,7 +32,7 @@ export default async function handler(
     });
 
     if (errors.length) {
-      return res.status(400).json({ errortMessage: errors });
+      return res.status(400).json({ errorMessage: errors });
     }
 
     const userWithEmail = await prisma.user.findUnique({
@@ -44,7 +44,7 @@ export default async function handler(
     if (!userWithEmail) {
       return res
         .status(401)
-        .json({ errortMessage: "Email or password is not correct" });
+        .json({ errorMessage: "Email or password is not correct" });
     }
 
     const isMatch = await bcrypt.compare(password, userWithEmail.password);
@@ -52,7 +52,7 @@ export default async function handler(
     if (!isMatch) {
       return res
         .status(401)
-        .json({ errortMessage: "Email or password is not correct" });
+        .json({ errorMessage: "Email or password is not correct" });
     }
 
     const ALG = "HS256";

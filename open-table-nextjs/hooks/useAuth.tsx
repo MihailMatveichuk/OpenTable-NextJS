@@ -28,8 +28,8 @@ const useAuth = () => {
     } catch (error: any) {
       setAuthState({
         data: null,
-        error: error.responce.data.errorMessage,
-        loading: true,
+        error: error.response.data.errorMessage,
+        loading: false,
       });
     }
   };

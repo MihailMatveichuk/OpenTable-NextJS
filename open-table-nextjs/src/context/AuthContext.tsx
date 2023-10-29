@@ -33,7 +33,7 @@ const AuthContext = ({ children }: { children: React.ReactNode }) => {
   const [authState, setAuthState] = useState<IState>({
     loading: false,
     data: null,
-    error: "Hello",
+    error: null,
   });
   return (
     <AuthenticationContext.Provider value={{ ...authState, setAuthState }}>
