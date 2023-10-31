@@ -39,6 +39,7 @@ export default function AuthModal({ isSignin }: { isSignin: boolean }) {
     city: "",
     password: "",
   });
+
   const [disabled, setDisabled] = useState(true);
   useEffect(() => {
     if (isSignin) {
@@ -69,7 +70,9 @@ export default function AuthModal({ isSignin }: { isSignin: boolean }) {
 
   const handleClick = () => {
     if (isSignin) {
-      signin(inputs.email, inputs.password);
+      signin(inputs.email, inputs.password, handleClose);
+      inputs.email = "";
+      inputs.password = "";
     } else {
       signup(
         inputs.email,
@@ -109,12 +112,6 @@ export default function AuthModal({ isSignin }: { isSignin: boolean }) {
               {error ? (
                 <div className='mb-8'>
                   <Alert severity='error'>{error}</Alert>
-                </div>
-              ) : data ? (
-                <div className='mb-8'>
-                  <Alert severity='success'>
-                    You was successfully signed in!!!
-                  </Alert>
                 </div>
               ) : null}
               <div className='uppercase font-bold text-center pb-2 border-b mb-2'>
