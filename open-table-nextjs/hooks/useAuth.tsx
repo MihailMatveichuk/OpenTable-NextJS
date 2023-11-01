@@ -44,21 +44,38 @@ const useAuth = () => {
     email: string,
     phone: string,
     city: string,
-    password: string
+    password: string,
+    handleClose: () => void
   ) => {
     setAuthState({
-      data,
-      error,
+      data: null,
+      error: null,
       loading: true,
     });
     try {
       const response = await axios.post(
         "http://localhost:3000/api/auth/signup",
-        {}
+        {
+          firstName,
+          lastName,
+          email,
+          phone,
+          city,
+          password,
+        }
       );
-      console.log(response);
-    } catch (err) {
-      console.log(err);
+      setAuthState({
+        data: response.data,
+        error: null,
+        loading: false,
+      });
+      handleClose();
+    } catch (error: any) {
+      setAuthState({
+        data: null,
+        error: error.response.data.errorMessage,
+        loading: false,
+      });
     }
   };
   return {

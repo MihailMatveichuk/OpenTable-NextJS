@@ -75,12 +75,13 @@ export default function AuthModal({ isSignin }: { isSignin: boolean }) {
       inputs.password = "";
     } else {
       signup(
-        inputs.email,
-        inputs.password,
         inputs.firstName,
         inputs.lastName,
+        inputs.email,
+        inputs.phone,
         inputs.city,
-        inputs.phone
+        inputs.password,
+        handleClose
       );
     }
   };
@@ -104,7 +105,7 @@ export default function AuthModal({ isSignin }: { isSignin: boolean }) {
       >
         <Box sx={style}>
           {loading ? (
-            <div className='h-[500px] flex justify-center items-center'>
+            <div className='h-[500px] flex justify-center items-center gap-4'>
               <CircularProgress color='error' />
             </div>
           ) : (
