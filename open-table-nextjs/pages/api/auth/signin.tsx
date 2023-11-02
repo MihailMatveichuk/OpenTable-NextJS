@@ -33,7 +33,7 @@ export default async function handler(
     });
 
     if (errors.length) {
-      return res.status(400).json({ errorMessage: errors });
+      return res.status(400).json({ errorMessage: errors[0] });
     }
 
     const user = await prisma.user.findUnique({

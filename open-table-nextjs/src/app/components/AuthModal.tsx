@@ -5,7 +5,7 @@ import Modal from "@mui/material/Modal";
 import { useEffect, useState, useContext } from "react";
 import AuthModalInputs from "./AuthModalInputs";
 import useAuth from "../../../hooks/useAuth";
-import { AuthenticationContext } from "@/context/AuthContext";
+import { AuthenticationContext } from "@/app/context/AuthContext";
 import { Alert, CircularProgress } from "@mui/material";
 
 const style = {
@@ -24,13 +24,12 @@ export default function AuthModal({ isSignin }: { isSignin: boolean }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { signin, signup } = useAuth();
   const { loading, data, error } = useContext(AuthenticationContext);
+  const { signin, signup } = useAuth();
 
   const renderContent = (signInContent: string, signUpContent: string) => {
     return isSignin ? signInContent : signUpContent;
   };
-
   const [inputs, setInputs] = useState({
     firstName: "",
     lastName: "",
@@ -41,6 +40,7 @@ export default function AuthModal({ isSignin }: { isSignin: boolean }) {
   });
 
   const [disabled, setDisabled] = useState(true);
+
   useEffect(() => {
     if (isSignin) {
       if (inputs.email && inputs.password) {
@@ -85,7 +85,6 @@ export default function AuthModal({ isSignin }: { isSignin: boolean }) {
       );
     }
   };
-
   return (
     <div>
       <button
@@ -117,6 +116,7 @@ export default function AuthModal({ isSignin }: { isSignin: boolean }) {
               ) : null}
               <div className='uppercase font-bold text-center pb-2 border-b mb-2'>
                 <p className='text-sm'>
+                  {data?.firstName}
                   {renderContent("Sign In", "Create A New Account")}
                 </p>
               </div>
