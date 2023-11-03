@@ -1,9 +1,7 @@
-import React, { useContext } from "react";
+import React, { useCallback, useContext } from "react";
 import axios from "axios";
 import { getCookie } from "cookies-next";
-import AuthContext, {
-  AuthenticationContext,
-} from "../src/app/context/AuthContext";
+import AuthContext, { AuthenticationContext } from "../context/AuthContext";
 
 const useAuth = () => {
   const { data, error, loading, setAuthState } = useContext(
@@ -81,6 +79,7 @@ const useAuth = () => {
       });
     }
   };
+
   const fetchUser = async () => {
     setAuthState({
       data: null,

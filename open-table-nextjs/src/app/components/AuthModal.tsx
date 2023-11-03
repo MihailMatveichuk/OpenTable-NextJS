@@ -5,7 +5,7 @@ import Modal from "@mui/material/Modal";
 import { useEffect, useState, useContext } from "react";
 import AuthModalInputs from "./AuthModalInputs";
 import useAuth from "../../../hooks/useAuth";
-import { AuthenticationContext } from "@/app/context/AuthContext";
+import { AuthenticationContext } from "../../../context/AuthContext";
 import { Alert, CircularProgress } from "@mui/material";
 
 const style = {
@@ -24,12 +24,13 @@ export default function AuthModal({ isSignin }: { isSignin: boolean }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { loading, data, error } = useContext(AuthenticationContext);
   const { signin, signup } = useAuth();
+  const { loading, data, error } = useContext(AuthenticationContext);
 
   const renderContent = (signInContent: string, signUpContent: string) => {
     return isSignin ? signInContent : signUpContent;
   };
+
   const [inputs, setInputs] = useState({
     firstName: "",
     lastName: "",
@@ -39,7 +40,7 @@ export default function AuthModal({ isSignin }: { isSignin: boolean }) {
     password: "",
   });
 
-  const [disabled, setDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
     if (isSignin) {
@@ -85,6 +86,7 @@ export default function AuthModal({ isSignin }: { isSignin: boolean }) {
       );
     }
   };
+
   return (
     <div>
       <button
@@ -115,8 +117,8 @@ export default function AuthModal({ isSignin }: { isSignin: boolean }) {
                 </div>
               ) : null}
               <div className='uppercase font-bold text-center pb-2 border-b mb-2'>
+                {data?.first_name}
                 <p className='text-sm'>
-                  {data?.firstName}
                   {renderContent("Sign In", "Create A New Account")}
                 </p>
               </div>

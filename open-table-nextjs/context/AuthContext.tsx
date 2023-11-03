@@ -3,11 +3,12 @@
 import React, { useState, createContext, useEffect } from "react";
 import { getCookie } from "cookies-next";
 import axios from "axios";
+import useAuth from "../hooks/useAuth";
 
 interface IUser {
   id: number;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
   phone: string;
   city: string;
@@ -42,11 +43,7 @@ export default function AuthContext({
     error: null,
   });
 
-  useEffect(() => {
-    fetchUser();
-  }, []);
-
-  async function fetchUser() {
+  const fetchUser = async () => {
     setAuthState({
       data: null,
       error: null,
@@ -54,7 +51,6 @@ export default function AuthContext({
     });
     try {
       const jwt = getCookie("jwt");
-
       if (!jwt) {
         return setAuthState({
           data: null,
@@ -75,7 +71,6 @@ export default function AuthContext({
         error: null,
         loading: false,
       });
-      console.log(authState.data);
     } catch (error: any) {
       setAuthState({
         data: null,
@@ -83,7 +78,11 @@ export default function AuthContext({
         loading: false,
       });
     }
-  }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   return (
     <AuthenticationContext.Provider value={{ ...authState, setAuthState }}>
