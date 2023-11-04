@@ -72,8 +72,6 @@ export default function AuthModal({ isSignin }: { isSignin: boolean }) {
   const handleClick = () => {
     if (isSignin) {
       signin(inputs.email, inputs.password, handleClose);
-      inputs.email = "";
-      inputs.password = "";
     } else {
       signup(
         inputs.firstName,
@@ -117,7 +115,6 @@ export default function AuthModal({ isSignin }: { isSignin: boolean }) {
                 </div>
               ) : null}
               <div className='uppercase font-bold text-center pb-2 border-b mb-2'>
-                {data?.first_name}
                 <p className='text-sm'>
                   {renderContent("Sign In", "Create A New Account")}
                 </p>

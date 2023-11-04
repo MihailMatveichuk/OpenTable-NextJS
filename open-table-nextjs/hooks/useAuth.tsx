@@ -1,10 +1,10 @@
 import React, { useCallback, useContext } from "react";
-import axios from "axios";
-import { getCookie } from "cookies-next";
+import axios, { AxiosError } from "axios";
+import { getCookie, deleteCookie } from "cookies-next";
 import AuthContext, { AuthenticationContext } from "../context/AuthContext";
 
 const useAuth = () => {
-  const { data, error, loading, setAuthState } = useContext(
+  const { data, loading, error, setAuthState } = useContext(
     AuthenticationContext
   );
   const signin = async (
@@ -118,10 +118,20 @@ const useAuth = () => {
     }
   };
 
+  const singout = () => {
+    deleteCookie("jwt");
+    setAuthState({
+      data: null,
+      error: null,
+      loading: false,
+    });
+  };
+
   return {
     signin,
     signup,
     fetchUser,
+    singout,
   };
 };
 

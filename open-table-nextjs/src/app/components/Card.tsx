@@ -37,5 +37,4 @@ const Card = ({ restaurant }: IProps) => {
     </div>
   );
 };
-
 export default Card;

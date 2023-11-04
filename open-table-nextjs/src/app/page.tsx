@@ -2,6 +2,7 @@ import Header from "./components/Header";
 import Head from "./head";
 import { Cuisine, Location, PRICE, PrismaClient, Review } from "@prisma/client";
 import Card from "./components/Card";
+import { Suspense } from "react";
 
 const prisma = new PrismaClient();
 
