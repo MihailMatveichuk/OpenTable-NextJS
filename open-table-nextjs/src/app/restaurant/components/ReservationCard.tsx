@@ -1,8 +1,19 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
+import { partysize } from "../../../../data";
+import DatePicker from "react-datepicker";
 
 const ReservationCard = () => {
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+
+  const handleDate = (date: Date | null) => {
+    if (date) {
+      return setSelectedDate(date);
+    }
+    return setSelectedDate(null);
+  };
+
   return (
     <div className='w-[27%] relative text-reg'>
       <div className='fixed w-[15%] bg-white rounded p-3 shadow'>
@@ -16,28 +27,34 @@ const ReservationCard = () => {
             className='py-3 border-b rounded font-light bg-white'
             id=''
           >
-            <option value=''>1 person</option>
-            <option value=''>2 people</option>
+            {partysize.map((size, id) => (
+              <option value={size.value} key={id}>
+                {size.label}
+              </option>
+            ))}
           </select>
         </div>
         <div className='flex justify-between'>
           <div className='flex flex-col w-[48%]'>
             <label htmlFor=''>Date</label>
-            <input
-              type='text'
-              className='bg-white outline-none border-b py-3 font-light w-28'
+            <DatePicker
+              selected={selectedDate}
+              onChange={handleDate}
+              className='py-3 border-b font-light text-reg w-24'
+              dateFormat='MMMM d'
+              wrapperClassName='[w-48%]'
             />
           </div>
           <div className='flex flex-col w-[48%]'>
             <label htmlFor=''>Time</label>
             <select
+              id=''
               name=''
               className='py-3
-          border-b
-          font-light 
-          bg-white 
-          outline-white'
-              id=''
+                        border-b
+                        font-light 
+                        bg-white 
+                        outline-white'
             >
               <option value=''>7:30 AM</option>
               <option value=''>9:30 AM</option>

@@ -16,7 +16,7 @@ const NavBar = () => {
         OpenTable
       </Link>
       <div>
-        {error && loading ? null : (
+        {loading && error ? null : (
           <div className='flex gap-3'>
             {data ? (
               <button
