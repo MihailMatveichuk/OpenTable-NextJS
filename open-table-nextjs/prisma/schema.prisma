@@ -21,11 +21,11 @@ model Restaurant {
   created_at  DateTime  @default(now())
   updated_at  DateTime  @updatedAt
   close_time  String
+  booking     Booking[]
   items       Item[]
   cuisine     Cuisine   @relation(fields: [cuisine_id], references: [id])
   location    Location  @relation(fields: [location_id], references: [id])
   reviews     Review[]
-  booking     Booking[]
   table       Table[]
 }
 
@@ -94,9 +94,9 @@ model Booking {
   booker_occasion   String
   booker_request    String
   restaurant_id     Int
-  restaurant        Restaurant       @relation(fields: [restaurant_id], references: [id])
   created_at        DateTime         @default(now())
   updated_at        DateTime         @updatedAt
+  restaurant        Restaurant       @relation(fields: [restaurant_id], references: [id])
   tables            BookingOnTable[]
 }
 
@@ -106,17 +106,17 @@ model Table {
   restaurant_id Int
   created_at    DateTime         @default(now())
   updated_at    DateTime         @updatedAt
-  restaurant    Restaurant       @relation(fields: [restaurant_id], references: [id])
   bookings      BookingOnTable[]
+  restaurant    Restaurant       @relation(fields: [restaurant_id], references: [id])
 }
 
 model BookingOnTable {
   booking_id Int
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  table_id   Int
   booking    Booking  @relation(fields: [booking_id], references: [id])
   table      Table    @relation(fields: [table_id], references: [id])
-  table_id   Int
 
   @@id([booking_id, table_id])
 }
