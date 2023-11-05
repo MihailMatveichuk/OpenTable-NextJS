@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import AuthModal from "./AuthModal";
 import { AuthenticationContext } from "../../../context/AuthContext";
 import useAuth from "../../../hooks/useAuth";
