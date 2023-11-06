@@ -6,7 +6,7 @@ export default function Head() {
 
   return (
     <>
-      <title>{params?.slug}</title>
+      <title>{params?.slug} | Open Table</title>
       <meta content='width=device-width, initial-scale=1' name='viewport' />
       <meta content='Generate' name='description' />
       <link rel='icon' href='/open-table-nextjs/src/app/favicon.ico' />

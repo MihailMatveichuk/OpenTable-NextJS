@@ -138,9 +138,11 @@ const ReservationCard = ({
                     </p>
                   </Link>
                 ) : (
-                  <p className='bg-gray-300 p-3 w-28 text-white text-center mb-3 rounded mr-2'>
-                    {convertToDisplayTime(item.time as Time)}
-                  </p>
+                  <div className='bg-gray-300 p-2 w-24 text-center text-white mb-3 rounded mr-3'>
+                    <p className='text-sm font-bold'>
+                      {convertToDisplayTime(item.time as Time)}
+                    </p>
+                  </div>
                 );
               })}
             </div>
