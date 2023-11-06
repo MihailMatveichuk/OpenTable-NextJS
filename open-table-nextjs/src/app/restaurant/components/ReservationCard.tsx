@@ -3,18 +3,32 @@
 import React, { useState } from "react";
 import { partysize, times } from "../../../../data";
 import DatePicker from "react-datepicker";
+import useAvalability from "../../../../hooks/useAvalability";
+import { CircularProgress } from "@mui/material";
+import Link from "next/link";
+import {
+  Time,
+  convertToDisplayTime,
+} from "../../../../utils/convertToDispalyTime";
 
 const ReservationCard = ({
   open_time,
   close_time,
+  slug,
 }: {
   open_time: string;
   close_time: string;
+  slug: string;
 }) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+  const { data, loading, error, fetchAvailability } = useAvalability();
+  const [time, setTime] = useState(open_time);
+  const [partySize, setPartySize] = useState(4);
+  const [day, setDay] = useState(new Date().toISOString().split("T")[0]);
 
   const handleDate = (date: Date | null) => {
     if (date) {
+      setDay(date.toISOString().split("T")[0]);
       return setSelectedDate(date);
     }
     return setSelectedDate(null);
@@ -37,11 +51,20 @@ const ReservationCard = ({
     return timesInWindow;
   };
 
+  const handleClick = () => {
+    fetchAvailability({
+      slug,
+      day,
+      time,
+      partySize,
+    });
+  };
+
   return (
     <div className='w-[27%] relative text-reg'>
       <div className='fixed w-[15%] bg-white rounded p-3 shadow'>
         <div className='text-center border-b pb-2 font-bold'>
-          <div className='h4 mr-7 text-lg'>Make a Reservation</div>
+          <div className='h4 mr-7 text-lg '>Make a Reservation</div>
         </div>
         <div className='my-3 flex flex-col'>
           <label htmlFor=''>Party size</label>
@@ -49,6 +72,10 @@ const ReservationCard = ({
             name=''
             className='py-3 border-b rounded font-light bg-white'
             id=''
+            value={partySize}
+            onChange={(e) => {
+              setPartySize(+e.target.value);
+            }}
           >
             {partysize.map((size, id) => (
               <option value={size.value} key={id}>
@@ -78,6 +105,8 @@ const ReservationCard = ({
                         font-light 
                         bg-white 
                         outline-white'
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
             >
               {filterTimeByRestaurantOpenWidow().map((time) => (
                 <option value={time.time}>{time.displayTime}</option>
@@ -86,10 +115,35 @@ const ReservationCard = ({
           </div>
         </div>
         <div className='mt-5'>
-          <button className='bg-red-600 rounded w-full px-4 text-white font-bold h-16'>
-            Find a time
+          <button
+            className='bg-red-600 rounded w-full px-4 text-white font-bold h-16'
+            onClick={handleClick}
+            disabled={loading}
+          >
+            {loading ? <CircularProgress color='inherit' /> : "Find a Time"}
           </button>
         </div>
+        {data && data.length ? (
+          <div className='mt-4'>
+            <p className='text-reg'>Select a Time</p>
+            <div className='grid grid-cols-2 mt-2'>
+              {data.map((item) => {
+                return item.available ? (
+                  <Link
+                    href={`/reserve/${slug}?date=${day}T${item.time}&partySize=${partySize}`}
+                    className='bg-red-600 cursor-pointer p-2 w-24 text-center text-white mb-3 rounded mr-3'
+                  >
+                    <p className='text-sm font-bold'>
+                      {convertToDisplayTime(item.time as Time)}
+                    </p>
+                  </Link>
+                ) : (
+                  <p className='bg-gray-300 p-3 w-22 text-white mb-3 rounded mr-2'></p>
+                );
+              })}
+            </div>
+          </div>
+        ) : null}
       </div>
     </div>
   );

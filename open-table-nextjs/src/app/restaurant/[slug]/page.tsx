@@ -67,6 +67,7 @@ const RestaurantDetailsPage = async ({
       <ReservationCard
         open_time={restaurant.open_time}
         close_time={restaurant.close_time}
+        slug={restaurant.slug}
       />
     </>
   );
