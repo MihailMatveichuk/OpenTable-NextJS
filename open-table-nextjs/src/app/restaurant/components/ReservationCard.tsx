@@ -138,7 +138,7 @@ const ReservationCard = ({
                     </p>
                   </Link>
                 ) : (
-                  <p className='bg-gray-300 p-3 w-22 text-white mb-3 rounded mr-2'></p>
+                  <p className='bg-gray-300 p-3 w-28 text-white mb-3 rounded mr-2'></p>
                 );
               })}
             </div>
