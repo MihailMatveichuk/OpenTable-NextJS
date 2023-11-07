@@ -1,3 +1,5 @@
+"use client";
+
 import Prise from "@/app/components/Prise";
 import { Cuisine, Location, PRICE } from "@prisma/client";
 import Link from "next/link";
@@ -10,7 +12,7 @@ const SearchSideBar = ({
 }: {
   location: Location[];
   cuisine: Cuisine[];
-  searchParams: { city?: string; cuisine?: string };
+  searchParams: { city?: string; cuisine?: string; price?: PRICE };
 }) => {
   const prices = [PRICE.CHEAP, PRICE.REGULAR, PRICE.EXPENSIVE];
 
@@ -27,6 +29,12 @@ const SearchSideBar = ({
                 city: region.name,
               },
             }}
+            style={
+              searchParams.city === region.name
+                ? { fontWeight: 500 }
+                : { fontWeight: 300 }
+            }
+            id={region.name}
             className='font-light text-reg capitalize'
             key={region.id}
           >
@@ -45,6 +53,11 @@ const SearchSideBar = ({
                 cuisine: item.name,
               },
             }}
+            style={
+              searchParams.cuisine === item.name
+                ? { fontWeight: 500 }
+                : { fontWeight: 300 }
+            }
             className='font-light text-reg capitalize'
             key={item.id}
           >
@@ -64,6 +77,11 @@ const SearchSideBar = ({
                   price: price,
                 },
               }}
+              style={
+                searchParams.price === price
+                  ? { fontWeight: 500 }
+                  : { fontWeight: 300 }
+              }
               className='border w-fit text-reg font-light rounded p-1 text-center'
               key={price}
             >
