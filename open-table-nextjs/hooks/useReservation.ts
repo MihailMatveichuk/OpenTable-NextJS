@@ -16,6 +16,7 @@ const useReservation = () => {
     bookerEmail,
     bookerOccasion,
     bookerRequest,
+    setIsBooked,
   }: {
     slug: string;
     day: string;
@@ -27,6 +28,7 @@ const useReservation = () => {
     bookerEmail: string;
     bookerOccasion?: string;
     bookerRequest?: string;
+    setIsBooked: React.Dispatch<React.SetStateAction<boolean>>;
   }) => {
     setLoading(true);
     try {
@@ -49,6 +51,7 @@ const useReservation = () => {
         }
       );
       setLoading(false);
+      setIsBooked(true);
       return response.data;
     } catch (error: any) {
       setLoading(false);

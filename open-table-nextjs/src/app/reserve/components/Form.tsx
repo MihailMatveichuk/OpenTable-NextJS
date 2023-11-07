@@ -3,6 +3,11 @@
 import React, { useEffect, useState } from "react";
 import useReservation from "../../../../hooks/useReservation";
 import { Alert, CircularProgress } from "@mui/material";
+import {
+  Time,
+  convertToDisplayTime,
+} from "../../../../utils/convertToDispalyTime";
+import { format } from "date-fns";
 
 interface IInputs {
   bookerFirstName: string;
@@ -33,6 +38,7 @@ const Form = ({
   const [day, time] = date.split("T");
   const { error, loading, createReservationData } = useReservation();
   const [disabled, setDisabled] = useState(true);
+  const [isBooked, setIsBooked] = useState(false);
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputs({
@@ -65,82 +71,97 @@ const Form = ({
       bookerEmail: inputs.bookerEmail,
       bookerOccasion: inputs.bookerOccasion,
       bookerRequest: inputs.bookerRequest,
+      setIsBooked,
     });
-    console.log(booking);
+    setInputs({
+      bookerFirstName: "",
+      bookerLastName: "",
+      bookerPhone: "",
+      bookerEmail: "",
+      bookerOccasion: "",
+      bookerRequest: "",
+    });
   };
+  const timeConverted = convertToDisplayTime(date.split("T")[1] as Time);
 
   return (
     <div className='mt-10 flex flex-wrap justify-between w-[660px]'>
-      {error ? (
-        <div className='mb-8'>
-          <Alert severity='error'>{error}</Alert>
+      {isBooked ? (
+        <div className='font-bold'>
+          <h1>
+            You are all booked up the table at {timeConverted} in{" "}
+            {format(new Date(day), "LLL d")}
+          </h1>
+          <p>Enjoy your reservation!!</p>
         </div>
-      ) : null}
-      <input
-        type='text'
-        className='border rounded p-3 w-80 mb-4'
-        placeholder='First name'
-        value={inputs.bookerFirstName}
-        name='bookerFirstName'
-        onChange={handleChangeInput}
-      />
-      <input
-        type='text'
-        className='border rounded p-3 w-80 mb-4'
-        placeholder='Last name'
-        value={inputs.bookerLastName}
-        name='bookerLastName'
-        onChange={handleChangeInput}
-      />
-      <input
-        type='text'
-        className='border rounded p-3 w-80 mb-4'
-        placeholder='Phone number'
-        value={inputs.bookerPhone}
-        name='bookerPhone'
-        onChange={handleChangeInput}
-      />
-      <input
-        type='text'
-        className='border rounded p-3 w-80 mb-4'
-        placeholder='Email'
-        value={inputs.bookerEmail}
-        name='bookerEmail'
-        onChange={handleChangeInput}
-      />
-      <input
-        type='text'
-        className='border rounded p-3 w-80 mb-4'
-        placeholder='Occasion (optional)'
-        value={inputs.bookerOccasion}
-        name='bookerOccasion'
-        onChange={handleChangeInput}
-      />
-      <input
-        type='text'
-        className='border rounded p-3 w-80 mb-4'
-        placeholder='Requests (optional)'
-        value={inputs.bookerRequest}
-        name='bookerRequests'
-        onChange={handleChangeInput}
-      />
-      <button
-        className='bg-red-600 w-full p-3 text-white font-bold rounded disabled:bg-gray-300'
-        disabled={disabled || loading}
-        onClick={handleClick}
-      >
-        {loading ? (
-          <CircularProgress color='inherit' />
-        ) : (
-          "Complete Reservation"
-        )}
-      </button>
-
-      <p className='mt-4 text-sm text-center'>
-        By clicking “Complete reservation” you agree to the OpenTable Terms of
-        Use and Privacy Policy. Standard text message rates may apply. You may
-        opt out of receiving text messages at any time.
-      </p>
+      ) : (
+        <>
+          <input
+            type='text'
+            className='border rounded p-3 w-80 mb-4'
+            placeholder='First name'
+            value={inputs.bookerFirstName}
+            name='bookerFirstName'
+            onChange={handleChangeInput}
+          />
+          <input
+            type='text'
+            className='border rounded p-3 w-80 mb-4'
+            placeholder='Last name'
+            value={inputs.bookerLastName}
+            name='bookerLastName'
+            onChange={handleChangeInput}
+          />
+          <input
+            type='text'
+            className='border rounded p-3 w-80 mb-4'
+            placeholder='Phone number'
+            value={inputs.bookerPhone}
+            name='bookerPhone'
+            onChange={handleChangeInput}
+          />
+          <input
+            type='text'
+            className='border rounded p-3 w-80 mb-4'
+            placeholder='Email'
+            value={inputs.bookerEmail}
+            name='bookerEmail'
+            onChange={handleChangeInput}
+          />
+          <input
+            type='text'
+            className='border rounded p-3 w-80 mb-4'
+            placeholder='Occasion (optional)'
+            value={inputs.bookerOccasion}
+            name='bookerOccasion'
+            onChange={handleChangeInput}
+          />
+          <input
+            type='text'
+            className='border rounded p-3 w-80 mb-4'
+            placeholder='Requests (optional)'
+            value={inputs.bookerRequest}
+            name='bookerRequest'
+            onChange={handleChangeInput}
+          />
+          <button
+            className='bg-red-600 w-full p-3 text-white font-bold rounded disabled:bg-gray-300'
+            disabled={disabled || loading}
+            onClick={handleClick}
+          >
+            {loading ? (
+              <CircularProgress color='inherit' />
+            ) : (
+              "Complete Reservation"
+            )}
+          </button>
+          <p className='mt-4 text-sm text-center'>
+            By clicking “Complete reservation” you agree to the OpenTable Terms
+            of Use and Privacy Policy. Standard text message rates may apply.
+            You may opt out of receiving text messages at any time.
+          </p>
+        </>
+      )}
     </div>
   );
 };
