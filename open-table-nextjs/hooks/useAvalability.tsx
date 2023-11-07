@@ -7,7 +7,6 @@ const useAvalability = () => {
   const [data, setDate] = useState<
     { time: string; available: boolean }[] | null
   >();
-  console.log(data);
 
   const fetchAvailability = async ({
     slug,
@@ -20,7 +19,6 @@ const useAvalability = () => {
     time: string;
     partySize: number;
   }) => {
-    console.log(slug, day, time, partySize);
     setLoading(true);
     try {
       const response = await axios.get(
