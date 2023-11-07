@@ -49,7 +49,7 @@ export default function AuthContext({
       loading: true,
     });
     try {
-      const jwt = getCookie("jwt");
+      const jwt = getCookie("_vercel_jwt");
       if (!jwt) {
         return setAuthState({
           data: null,

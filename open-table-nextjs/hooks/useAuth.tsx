@@ -1,7 +1,7 @@
-import React, { useCallback, useContext } from "react";
-import axios, { AxiosError } from "axios";
+import { useContext } from "react";
+import axios from "axios";
 import { getCookie, deleteCookie } from "cookies-next";
-import AuthContext, { AuthenticationContext } from "../context/AuthContext";
+import { AuthenticationContext } from "../context/AuthContext";
 
 const useAuth = () => {
   const { data, loading, error, setAuthState } = useContext(
@@ -87,7 +87,7 @@ const useAuth = () => {
       loading: true,
     });
     try {
-      const jwt = getCookie("jwt");
+      const jwt = getCookie("_vercel_jwt");
 
       if (!jwt) {
         return setAuthState({
@@ -119,7 +119,7 @@ const useAuth = () => {
   };
 
   const singout = () => {
-    deleteCookie("jwt");
+    deleteCookie("_vercel_jwt");
     setAuthState({
       data: null,
       error: null,
