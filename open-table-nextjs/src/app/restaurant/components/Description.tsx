@@ -18,7 +18,7 @@ const Description = () => {
         <Images images={[]} />
         <Review reviews={[]} />
       </div>
-      <ReservationCard />
+      <ReservationCard open_time={""} close_time={""} slug={""} />
     </div>
   );
 };
