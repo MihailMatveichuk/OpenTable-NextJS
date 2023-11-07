@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { instance } from "../utils/axiousCreate";
 
 const useAvalability = () => {
   const [loading, setLoading] = useState(false);
@@ -21,8 +22,8 @@ const useAvalability = () => {
   }) => {
     setLoading(true);
     try {
-      const response = await axios.get(
-        `http://localhost:3000/api/restaurant/${slug}/availability`,
+      const response = await instance.get(
+        `/api/restaurant/${slug}/availability`,
         {
           params: {
             day,

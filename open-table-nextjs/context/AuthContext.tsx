@@ -3,6 +3,7 @@
 import React, { useState, createContext, useEffect } from "react";
 import { getCookie } from "cookies-next";
 import axios from "axios";
+import { instance } from "../utils/axiousCreate";
 
 interface IUser {
   id: number;
@@ -57,7 +58,7 @@ export default function AuthContext({
           loading: false,
         });
       }
-      const response = await axios.get("http://localhost:3000/api/auth/me", {
+      const response = await instance.get(`/api/auth/me`, {
         headers: {
           Authorization: `Bearer ${jwt}`,
         },

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { instance } from "../utils/axiousCreate";
 
 const useReservation = () => {
   const [loading, setLoading] = useState(false);
@@ -32,8 +33,8 @@ const useReservation = () => {
   }) => {
     setLoading(true);
     try {
-      const response = await axios.post(
-        `http://localhost:3000/api/restaurant/${slug}/reserve`,
+      const response = await instance.post(
+        `/api/restaurant/${slug}/reserve`,
         {
           bookerFirstName,
           bookerLastName,
