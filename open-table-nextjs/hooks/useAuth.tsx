@@ -87,7 +87,7 @@ const useAuth = () => {
       loading: true,
     });
     try {
-      const jwt = getCookie("_vercel_jwt");
+      const jwt = getCookie("jwt");
 
       if (!jwt) {
         return setAuthState({
@@ -119,7 +119,7 @@ const useAuth = () => {
   };
 
   const singout = () => {
-    deleteCookie("_vercel_jwt");
+    deleteCookie("jwt");
     setAuthState({
       data: null,
       error: null,

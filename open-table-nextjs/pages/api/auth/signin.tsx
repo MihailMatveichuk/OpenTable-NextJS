@@ -66,7 +66,7 @@ export default async function handler(
       .setExpirationTime("24h")
       .sign(SECRET);
 
-    setCookie("_vercel_jwt", token, { req, res, maxAge: 60 * 6 * 24 });
+    setCookie("jwt", token, { req, res, maxAge: 60 * 6 * 24 });
 
     res.status(200).json({
       firstName: user.first_name,
