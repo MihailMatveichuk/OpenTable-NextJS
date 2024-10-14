@@ -1,4 +1,4 @@
-import { Review } from "@prisma/client";
+import { Review } from '@prisma/client/edge';
 
 export const calculatReviewRating = (reviews: Review[]) => {
   if (!reviews.length) return 0;
