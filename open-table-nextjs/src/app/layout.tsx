@@ -1,11 +1,11 @@
-import "./globals.css";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import NavBar from "./components/NavBar";
-import AuthContext from "../../context/AuthContext";
-import "react-datepicker/dist/react-datepicker.css";
+import './globals.css';
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import NavBar from './components/NavBar';
+import AuthContext from '../../context/AuthContext';
+import 'react-datepicker/dist/react-datepicker.css';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({
   children,
@@ -13,11 +13,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en'>
+    <html lang="en">
       <body>
-        <main className='bg-gray-100 min-h-screen w-screen'>
+        <main className="bg-gray-100 min-h-screen w-screen">
           <AuthContext>
-            <main className='max-w-screen-2xl m-auto bg-white'>
+            <main className="m-auto bg-white">
               <NavBar />
               <main>{children}</main>
             </main>

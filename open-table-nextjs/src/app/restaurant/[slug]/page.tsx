@@ -1,14 +1,14 @@
-import React from "react";
-import RestaurantNav from "../components/RestaurantNav";
-import Item from "../components/Item";
-import Ratings from "../components/Ratings";
-import DescriptionItem from "../components/DescriptionItem";
-import Images from "../components/Images";
-import ReviewItem from "../components/Review";
-import ReservationCard from "../components/ReservationCard";
-import Head from "./head";
-import { PrismaClient, Review } from "@prisma/client";
-import { notFound } from "next/navigation";
+import React from 'react';
+import RestaurantNav from '../components/RestaurantNav';
+import Item from '../components/Item';
+import Ratings from '../components/Ratings';
+import DescriptionItem from '../components/DescriptionItem';
+import Images from '../components/Images';
+import ReviewItem from '../components/Review';
+import ReservationCard from '../components/ReservationCard';
+import Head from './head';
+import { PrismaClient, Review } from '@prisma/client';
+import { notFound } from 'next/navigation';
 
 const prisma = new PrismaClient();
 
@@ -53,10 +53,11 @@ const RestaurantDetailsPage = async ({
   params: { slug: string };
 }) => {
   const restaurant = await fetchRestaurantData(params.slug);
+
   return (
     <>
       <Head />
-      <div className='bg-white w-[70%] rounded p-3 shadow'>
+      <div className="bg-white w-[70%] rounded p-3 shadow">
         <RestaurantNav slug={restaurant.slug} />
         <Item name={restaurant.name} />
         <Ratings reviews={restaurant.reviews} />

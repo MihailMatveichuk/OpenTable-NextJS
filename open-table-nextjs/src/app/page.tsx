@@ -1,9 +1,8 @@
+import { Cuisine, Location, PRICE, PrismaClient, Review } from '@prisma/client';
+import CardList from './components/CardList';
 import Header from './components/Header';
 import Head from './head';
-import { Cuisine, Location, PRICE, PrismaClient, Review } from '@prisma/client';
-import Card from './components/Card';
-
-const prisma = new PrismaClient();
+import Footer from './components/Footer';
 
 export interface IRestaurant {
   id: number;
@@ -16,7 +15,9 @@ export interface IRestaurant {
   reviews: Review[];
 }
 
-const fetchRestaurant = async (): Promise<IRestaurant[]> => {
+const prisma = new PrismaClient();
+
+export const fetchRestaurant = async (): Promise<IRestaurant[]> => {
   const restaurants = await prisma.restaurant.findMany({
     select: {
       id: true,
@@ -34,17 +35,15 @@ const fetchRestaurant = async (): Promise<IRestaurant[]> => {
 };
 
 export default async function Home() {
-  const restaurants = await fetchRestaurant();
+  const restaurants: IRestaurant[] = await fetchRestaurant();
+  const maxCount = restaurants.length;
 
   return (
     <main>
       <Head />
       <Header />
-      <div className="py-3 px-36 mt-10 flex justify-center flex-wrap">
-        {restaurants.map((restaurant: IRestaurant) => (
-          <Card restaurant={restaurant} key={restaurant.id} />
-        ))}
-      </div>
+      <CardList data={restaurants} maxValue={maxCount} />
+      <Footer />
     </main>
   );
 }
